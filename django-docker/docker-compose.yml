@@ -1,0 +1,62 @@
+version: '3'
+services:
+  mywebapp:
+    # build:
+    #   context: ./myFirstProject #django project dir
+    #   dockerfile: Dockerfile
+    image: abhishek235/myfirstapp:latest
+
+    #command: bash -c "python manage.py collectstatic --no-input &amp;&amp; python manage.py migrate &amp;&amp; gunicorn --bind 0.0.0.0:8000 -w 4 core.wsgi"
+    volumes:
+      - staticfiles:/myFirstProject/staticfiles
+    ports:
+      - '8888'
+      #- "443:443" # Docker open external port 443 and redirect all traffic to internal port 443
+    expose:
+      - '8888'
+      #- '443'
+    #depends_on:
+    #  db:
+    #    condition: service_healthy
+  nginx:
+    # build:
+    #   context: ./nginx
+    #   dockerfile: Dockerfile
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      #- 9090:80
+      - 80:80
+    expose:
+      - '9090'
+      - '80'
+    volumes:
+    - ./nginx/conf.d:/etc/nginx/conf.d
+    - ./nginx/django-docker:/etc/nginx/sites-available/django-docker
+    #command: bash -c "ln -s /etc/nginx/sites-available/django-docker /etc/nginx/sites-enabled/django-docker"
+    #depends_on:
+    #  - mywebapp
+    links:
+      - mywebapp
+  mysql:
+    image: 'mysql:5.7'
+    volumes:
+       - '~/mysql_database:/var/lib/mysql'
+       - ./init.sql:/data/application/init.sql
+    command: --init-file /data/application/init.sql
+    restart: 'always'
+    expose:
+      - '3306'
+    ports:
+      - '3306:3306'
+    environment:
+       MYSQL_ROOT_PASSWORD: 'webapppass1'
+       MYSQL_DATABASE: 'db'
+       MYSQL_USER: 'webapp1'
+       MYSQL_PASSWORD: 'webapppass1'
+    healthcheck:
+      test: "exit 0"
+volumes:
+  #mysql_data:
+  staticfiles:

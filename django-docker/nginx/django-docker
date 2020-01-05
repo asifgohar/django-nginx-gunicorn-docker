@@ -1,0 +1,20 @@
+server {
+    server_name local.django-docker.com;
+ 
+    #....
+   # proxy configures 
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header HOST $http_host;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header        X-Forwarded-Proto $scheme;
+    proxy_set_header X-HTTPS-Protocol $ssl_protocol;
+    proxy_set_header X-NginX-Proxy true;
+ 
+    location / {
+        proxy_pass http://127.0.0.1:80;
+        proxy_pass http://local.django-docker.com;
+    }
+ 
+    #....
+ 
+  }
