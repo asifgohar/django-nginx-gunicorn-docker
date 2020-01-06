@@ -82,3 +82,16 @@ at local machine: create an image by following step 3
 push the image to docker hub
 on server, you need not to generate the image by following step 3. Just pass the image name as described in step 4 and do not use docker-compose build. You just have to "docker-compose up" with sudo.
 ```
+
+#### Push docker image to docker hub
+
+To push your images to docker hub, you need to login to your docker account before pushing your images. You can login to docker hub account using following command.
+```
+cat ./docker-password.txt | sudo docker login --username=<Docker_Hub_User_Name> --password-stdin
+```
+> _store docker-hub account password in docker-password.txt file_
+```
+sudo docker push yourhubusername/imageName
+for example: sudo docker push abhishek235/myfirstapp
+```
+
