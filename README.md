@@ -23,9 +23,27 @@ cd init-django-setup
 4. Copy docker-compose.yaml
 5. Copy nginx directory(conf.d, django-docker)
 6. Create Dockerfile, gunicorn.py in projectApp dir where manage.py file resides
-7. Modify Dockerfile in projectsApp dir, change ENV variable PROJECT_DIR
+7. Modify Dockerfile in projectsApp dir, change ENV variable DJANGO_PROJECT_NAME. Actually it's path to wsgi.py file.
 8. Change allowed hosts in settings.py
+
 ALLOWED_HOSTS = ["*"]
+
+9. Add mysql database details in settings.py
+```
+# HOST name is the service name defined in docker-compose.yml file. If you noticed services in the docker-compose.yml file, service name for mysql is "mysql". so HOST name should be "mysql".
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': 'db',
+       'USER': 'webapp1',
+       'PASSWORD': 'webapppass1',
+       'HOST': 'mysql',
+       'OPTIONS': {
+           'init_command': "set sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'"
+       },
+   }
+}
+```
 
 #### Step 3: build docker image for your django project
 

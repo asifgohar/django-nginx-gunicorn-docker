@@ -4,7 +4,7 @@ services:
     # build:
     #   context: ./myFirstProject #django project dir
     #   dockerfile: Dockerfile
-    image: abhishek235/myfirstapp:latest
+    image: abhishek235/myfirstapp:mysql-db1
 
     #command: bash -c "python manage.py collectstatic --no-input &amp;&amp; python manage.py migrate &amp;&amp; gunicorn --bind 0.0.0.0:8000 -w 4 core.wsgi"
     volumes:
@@ -15,9 +15,10 @@ services:
     expose:
       - '8888'
       #- '443'
-    #depends_on:
-    #  db:
-    #    condition: service_healthy
+    links:
+      - mysql
+    depends_on:
+      - mysql
   nginx:
     # build:
     #   context: ./nginx
@@ -35,8 +36,8 @@ services:
     - ./nginx/conf.d:/etc/nginx/conf.d
     - ./nginx/django-docker:/etc/nginx/sites-available/django-docker
     #command: bash -c "ln -s /etc/nginx/sites-available/django-docker /etc/nginx/sites-enabled/django-docker"
-    #depends_on:
-    #  - mywebapp
+    depends_on:
+      - mywebapp
     links:
       - mywebapp
   mysql:
