@@ -57,3 +57,10 @@ mywebapp:
 sudo docker-compose build --no-cache
 
 sudo docker-compose up
+
+```
+If you have an image for your webapp and uploaded it to docker hub, you need not to build docker image in step 3. "docker-compose up" will download the image from docker hub if it will not be on the local machine. To make it clear, you can understand it by scenario: 
+at local machine: create an image by following step 3
+push the image to docker hub
+on server, you need not to generate the image by following step 3. Just pass the image name as described in step 4 and do not use docker-compose build. You just have to "docker-compose up" with sudo.
+```
