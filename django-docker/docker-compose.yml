@@ -4,7 +4,7 @@ services:
     # build:
     #   context: ./myFirstProject #django project dir
     #   dockerfile: Dockerfile
-    image: abhishek235/myfirstapp:mysql-db1
+    image: abhishek235/myfirstapp:base-image
 
     #command: bash -c "python manage.py collectstatic --no-input &amp;&amp; python manage.py migrate &amp;&amp; gunicorn --bind 0.0.0.0:8000 -w 4 core.wsgi"
     volumes:
