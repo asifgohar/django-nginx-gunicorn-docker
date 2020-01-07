@@ -20,7 +20,7 @@ cd init-django-setup
 
 > Step 1,2 and 3 are done in init-django-project/init-django-setup.sh file. Kindly check to ensure whether requirements.txt file is in project's directory parallel to manage.py
 
-4. Copy docker-compose.yaml
+4. Copy docker-compose.yml
 5. Copy nginx directory(conf.d, django-docker)
 6. Create Dockerfile, gunicorn.py in projectApp dir where manage.py file resides
 7. Modify Dockerfile in projectsApp dir, change ENV variable DJANGO_PROJECT_NAME. Actually it's path to wsgi.py file.
@@ -49,12 +49,12 @@ DATABASES = {
 
 cd myFirstProject # go to your project directory
 
-sudo docker build -t abhishek235/myfirstapp .
+sudo docker build -t abhishek235/myfirstapp:base-image .
 
 ***result will be something like this:***
 ```
 Successfully built b03b1e885432
-Successfully tagged abhishek235/myfirstapp:latest
+Successfully tagged abhishek235/myfirstapp:base-image
 ```
 #### Step 4: Add docker image name for django web app in docker-compose.yml
 
@@ -67,7 +67,7 @@ mywebapp:
     # build:
     #   context: ./myFirstProject #django project dir
     #   dockerfile: Dockerfile
-    image: abhishek235/myfirstapp:latest
+    image: abhishek235/myfirstapp:base-image
 ```
 
 #### Step 5: build docker compose
@@ -92,6 +92,6 @@ cat ./docker-password.txt | sudo docker login --username=<Docker_Hub_User_Name> 
 > _store docker-hub account password in docker-password.txt file_
 ```
 sudo docker push yourhubusername/imageName
-for example: sudo docker push abhishek235/myfirstapp
+for example: sudo docker push abhishek235/myfirstapp:base-image
 ```
 
