@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: workflow
+  namespace: namespace-workflow-1693511807716
+spec:
+  type: LoadBalancer
+  selector:
+    app: workflow
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
