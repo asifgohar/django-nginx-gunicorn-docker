@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workflow
+  labels:
+    app: workflow
+  namespace: namespace-workflow-1693511807716
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workflow
+  template:
+    metadata:
+      labels:
+        app: workflow
+    spec:
+      containers:
+        - name: workflow
+          image: greatlacewingaksregistryveer.azurecr.io/image-workflow-1693511807716-veer:latest
+          ports:
+            - containerPort: 8000
